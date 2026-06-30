@@ -272,7 +272,7 @@ const btnMode = document.getElementById('btn-mode');
 btnMode.addEventListener('click', () => {
     isHardMode = !isHardMode;
     if (isHardMode) {
-        btnMode.innerText = "MODE: HARD 🔥";
+        btnMode.innerText = "MODE: GNARLY 🤙";
         btnMode.style.background = "#FF0000";
         btnMode.style.boxShadow = "0 4px 0 #CC0000";
     } else {
