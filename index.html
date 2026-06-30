@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Surfs Up! AI Competition</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="sun"></div>
+
+    <div class="jumbotron">
+        <h1 id="main-command">AI SURF ACADEMY</h1>
+        <h2 id="sub-command">Connect Bridge micro:bit</h2>
+        <div class="timer" id="timer">--</div>
+        
+        <div class="controls">
+            <button id="btn-mode" style="background: #32CD32; box-shadow: 0 4px 0 #228B22;">MODE: EASY 🌊</button>
+            <button id="btn-connect">1. CONNECT BRIDGE</button>
+            <button id="btn-start" style="display:none;">2. CATCH THE WAVE!</button>
+            <button id="btn-keyboard">TEST (Keys 1-9, 0, Q-T)</button>
+        </div>
+    </div>
+
+    <div class="wave-zone phase-idle" id="wave-zone">
+        <svg class="wave-graphic" viewBox="0 0 1440 800" preserveAspectRatio="none">
+            <path class="wave-back" d="M 0 800 L 0 450 C 480 450, 960 450, 1440 450 L 1440 800 Z"></path>
+            <path class="wave-front" d="M 0 800 L 0 500 C 480 500, 960 500, 1440 500 L 1440 800 Z"></path>
+            <path class="wave-foam" d="M 0 800 L 0 520 C 480 520, 960 520, 1440 520 L 1440 800 Z"></path>
+        </svg>
+
+        </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

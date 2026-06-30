@@ -1,0 +1,118 @@
+:root {
+    --sky: #FFDAB9; /* Warm sunset sky */
+}
+
+body {
+    margin: 0; overflow: hidden; background: var(--sky);
+    font-family: 'Nunito', sans-serif;
+}
+
+.sun {
+    position: absolute; top: 50px; right: 100px; width: 150px; height: 150px;
+    background: #FF4500; border-radius: 50%; box-shadow: 0 0 50px #FF4500;
+}
+
+/* --- COMMAND CENTER --- */
+.jumbotron {
+    position: absolute; top: 20px; left: 20px; z-index: 100;
+    background: rgba(255, 255, 255, 0.95); border: 5px solid #FF4500; border-radius: 15px;
+    padding: 20px 30px; text-align: left; box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+}
+.jumbotron h1 { font-family: 'Fredoka One', cursive; font-size: 36px; color: #FF4500; margin: 0; }
+.jumbotron h2 { font-size: 20px; color: #333; margin: 5px 0 10px 0; }
+.timer { font-size: 36px; color: #FF0000; font-weight: 900; }
+
+.controls { display: flex; gap: 10px; margin-top: 15px; }
+button {
+    background: #FF4500; color: white; border: none; padding: 10px 15px;
+    font-size: 14px; font-weight: 900; border-radius: 8px; cursor: pointer;
+    box-shadow: 0 4px 0 #CC3700; transition: 0.1s;
+}
+button:active { transform: translateY(4px); box-shadow: 0 0 0 #CC3700; }
+#btn-connect { background: #32CD32; box-shadow: 0 4px 0 #228B22; }
+
+/* --- THE DYNAMIC WAVE --- */
+.wave-zone {
+    position: absolute; bottom: 0; left: 0; width: 100vw; height: 100vh;
+    pointer-events: none;
+}
+.wave-graphic {
+    position: absolute; bottom: 0; left: 0; width: 100%; height: 100%;
+}
+
+/* Base Colors and Animations */
+.wave-back { fill: #0077be; animation: swell 4s infinite alternate ease-in-out; }
+.wave-front { fill: #00a8ff; animation: swell 3s infinite alternate-reverse ease-in-out; }
+.wave-foam { fill: rgba(255,255,255,0.8); animation: swell 2.5s infinite alternate ease-in-out; }
+
+@keyframes swell { 0% { transform: scaleY(1); } 100% { transform: scaleY(1.03); } }
+
+/* CSS Path Morphing Transitions */
+.wave-graphic path {
+    transition: d 2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* State 1: IDLE / FLAT */
+.phase-idle .wave-back { d: path("M 0 800 L 0 450 C 480 450, 960 450, 1440 450 L 1440 800 Z"); }
+.phase-idle .wave-front { d: path("M 0 800 L 0 500 C 480 500, 960 500, 1440 500 L 1440 800 Z"); }
+.phase-idle .wave-foam { d: path("M 0 800 L 0 520 C 480 520, 960 520, 1440 520 L 1440 800 Z"); }
+
+/* State 2: PADDLE (Swelling) */
+.phase-paddle .wave-back { d: path("M 0 800 L 0 500 C 480 500, 960 300, 1440 200 L 1440 800 Z"); }
+.phase-paddle .wave-front { d: path("M 0 800 L 0 550 C 480 550, 960 350, 1440 250 L 1440 800 Z"); }
+.phase-paddle .wave-foam { d: path("M 0 800 L 0 570 C 480 570, 960 400, 1440 350 L 1440 800 Z"); }
+
+/* State 3: POPUP (Dropping In) */
+.phase-popup .wave-back { d: path("M 0 800 L 0 550 C 600 550, 960 100, 1440 50 L 1440 800 Z"); }
+.phase-popup .wave-front { d: path("M 0 800 L 0 600 C 600 600, 960 150, 1440 100 L 1440 800 Z"); }
+.phase-popup .wave-foam { d: path("M 0 800 L 0 620 C 600 620, 960 300, 1440 250 L 1440 800 Z"); }
+
+/* State 4: BALANCE (Full Wave Face) */
+.phase-balance .wave-back { d: path("M 0 800 L 0 600 C 700 600, 960 50, 1440 0 L 1440 800 Z"); }
+.phase-balance .wave-front { d: path("M 0 800 L 0 650 C 700 650, 960 100, 1440 50 L 1440 800 Z"); }
+.phase-balance .wave-foam { d: path("M 0 800 L 0 670 C 700 670, 960 350, 1440 200 L 1440 800 Z"); }
+
+/* State 5: WIN (Flattens out) */
+.phase-win .wave-back { d: path("M 0 800 L 0 450 C 480 450, 960 450, 1440 450 L 1440 800 Z"); }
+.phase-win .wave-front { d: path("M 0 800 L 0 500 C 480 500, 960 500, 1440 500 L 1440 800 Z"); }
+.phase-win .wave-foam { d: path("M 0 800 L 0 520 C 480 520, 960 520, 1440 520 L 1440 800 Z"); }
+
+
+/* --- SURFER POSITIONING --- */
+.surfer-wrapper {
+    position: absolute;
+    width: 80px; height: 110px;
+    display: flex; flex-direction: column; align-items: center; justify-content: flex-end;
+    /* Smooth transition for when the JS updates their Y position on the wave! */
+    transition: top 2s cubic-bezier(0.4, 0, 0.2, 1); 
+    transform-origin: center center;
+}
+
+.surfer-id-tag {
+    background: #fff; color: #000; border: 3px solid #333;
+    width: 25px; height: 25px; border-radius: 50%; font-weight: 900; 
+    line-height: 20px; text-align: center; font-size: 14px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.5); z-index: 10; margin-bottom: 5px;
+    transition: all 0.3s;
+}
+
+.stickman-container { width: 80px; height: 80px; position: relative; }
+.stickman-container svg { width: 100%; height: 100%; display: block; filter: drop-shadow(0px 10px 5px rgba(0,0,0,0.4)); }
+
+/* Game States */
+.surfer-wrapper.success .surfer-id-tag { border-color: #32CD32; color: #32CD32; transform: scale(1.2); }
+
+/* WIPEOUT PHYSICS */
+.surfer-wrapper.wipeout {
+    transition: transform 1.5s cubic-bezier(0.55, 0.085, 0.68, 0.53); /* Gravity fall curve */
+    transform: translateY(80vh) rotate(-180deg) !important; /* Fall to bottom of screen and flip */
+    opacity: 0.5;
+}
+.surfer-wrapper.wipeout .surfer-id-tag { border-color: #FF0000; color: #FF0000; }
+
+/* SURFING (Bobbing on the wave) */
+.surfer-wrapper.surfing { animation: surfBob 1.5s infinite alternate cubic-bezier(0.4, 0, 0.2, 1); }
+@keyframes surfBob { 
+    0% { margin-top: 0px; transform: rotate(-5deg); } 
+    100% { margin-top: -15px; transform: rotate(5deg); } 
+}
